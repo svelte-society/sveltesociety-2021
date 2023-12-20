@@ -1,5 +1,7 @@
 <script>
 	import '../app.pcss';
+
+	const { children } = $props();
 </script>
 
-<slot />
+{@render children()}

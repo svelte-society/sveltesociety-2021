@@ -12,7 +12,9 @@
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
 		"test:integration": "playwright test",
-		"test:unit": "vitest"
+		"test:unit": "vitest",
+		"gen:types": "pocketbase-typegen --out ./src/lib/pocketbase-types.ts --env",
+		"gen:schema": "pocketbase-typegen --json --env"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",

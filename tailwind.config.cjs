@@ -6,8 +6,17 @@ const config = {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 
 	theme: {
-		extend: {}
-	},
+		fontFamily: {
+		  'display': ['Manrope'],
+		  'body': ['Manrope']
+		},
+		extend: {
+		  colors: {
+			primary: 'rgb(var(--color-primary) / <alpha-value>)',
+			secondary: 'rgb(var(--color-secondary) / <alpha-value>)',
+		  }
+		}
+	  },
 
 	plugins: [forms, typography]
 };

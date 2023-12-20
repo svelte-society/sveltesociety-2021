@@ -1,10 +1,15 @@
-# create-svelte
+# sveltesociety.dev
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+This branch contains the upcoming Svelte Society website featuring a new design and data that lives in a database.
 
-## Creating a project
+## Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+- Tailwind
+- vite-plugin-kit-route
+
+## Development
+
+To start off, clone and run `pnpm i`.
 
 ```bash
 # create a new project in the current directory
