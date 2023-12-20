@@ -1,4 +1,0 @@
-# Sitemap: https://sveltesociety.dev/sitemap.xml
-
-User-Agent: *
-Disallow: /fonts/

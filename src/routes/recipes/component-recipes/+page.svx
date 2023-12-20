@@ -1,7 +1,0 @@
----
-title: Components
-layout: recipeCategory
-icon: 'code'
----
-
-## Recipes

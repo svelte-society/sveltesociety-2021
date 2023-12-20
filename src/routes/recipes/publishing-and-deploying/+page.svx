@@ -1,7 +1,0 @@
----
-title: Publishing and Deploying
-layout: recipeCategory
-icon: 'docker'
----
-
-## Recipes

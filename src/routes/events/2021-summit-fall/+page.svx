@@ -1,9 +1,0 @@
----
-title: 🍁 Svelte Summit Fall 2021
-layout: eventPage
-date: 2021-11-20
----
-
-Svelte Summit is an event dedicated to Svelte and everything that is happening in the community. The event will be a day of (exclusive) talks streamed online, syndicated on various platforms including [YouTube](https://youtube.com/SvelteSociety). Specific discussions about the talks and water-cooler chit-chat will happen live in the [Svelte Discord server](https://discord.gg/daNtanDmsE). The fall event this year will take place on Nov 20th.
-
-Get more information on the [Svelte Fall Summit 2021 website](https://sveltesummit.com/) and signup to the mailing list!

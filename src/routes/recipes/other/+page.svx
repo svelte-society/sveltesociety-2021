@@ -1,7 +1,0 @@
----
-title: Other
-layout: recipeCategory
-icon: 'archive'
----
-
-## Recipes

@@ -1,7 +1,0 @@
----
-title: Design Patterns
-layout: recipeCategory
-icon: 'palette'
----
-
-## Recipes

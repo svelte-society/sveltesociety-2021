@@ -1,9 +1,0 @@
----
-title: Build Setup
-layout: recipeCategory
-icon: 'hammer'
----
-
-## Using Svelte with other technologies (e.g. PostCSS, SCSS, TypeScript, and Babel)
-
-Svelte doesn't build in any opinions on the kind of JavaScript, CSS, or even HTML you write. Therefore, if you want to use any nonstandard syntax, you need to put that into your bundler plugin chain or Svelte's preprocessors. Here we will describe the top usecases for doing this.
