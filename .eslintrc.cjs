@@ -1,26 +1,22 @@
-// @ts-check
-
-/** @type {import('eslint').Linter.Config} */
-const config = {
+/** @type { import("eslint").Linter.FlatConfig } */
+module.exports = {
 	root: true,
 	extends: [
 		'eslint:recommended',
 		'plugin:@typescript-eslint/recommended',
-		'plugin:@typescript-eslint/stylistic',
 		'plugin:svelte/recommended',
 		'prettier'
 	],
-	plugins: ['@typescript-eslint', 'svelte'],
 	parser: '@typescript-eslint/parser',
+	plugins: ['@typescript-eslint'],
 	parserOptions: {
-		project: true,
 		sourceType: 'module',
-		ecmaVersion: 2022,
+		ecmaVersion: 2020,
 		extraFileExtensions: ['.svelte']
 	},
 	env: {
 		browser: true,
-		es2022: true,
+		es2017: true,
 		node: true
 	},
 	overrides: [
@@ -31,14 +27,5 @@ const config = {
 				parser: '@typescript-eslint/parser'
 			}
 		}
-	],
-	rules: {
-		'@typescript-eslint/array-type': 'off',
-		'@typescript-eslint/consistent-type-definitions': 'off',
-		'svelte/block-lang': ['error', { script: ['ts'] }],
-		'svelte/no-at-html-tags': 'off',
-		'svelte/valid-compile': 'off'
-	}
+	]
 };
-
-module.exports = config;
