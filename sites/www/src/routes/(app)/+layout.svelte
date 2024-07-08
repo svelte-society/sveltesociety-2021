@@ -7,7 +7,7 @@
 </script>
 
 <div class="flex min-h-screen flex-col">
-	<header class="border-svelte-900 border-b-4 p-4">
+	<header class="border-b-4 border-svelte-900 p-4">
 		<div class="container mx-auto flex items-center justify-between gap-4">
 			<a href="/" class="flex items-center gap-2">
 				<svg
@@ -96,7 +96,7 @@
 	<div class="container mx-auto flex flex-1">
 		<LeftSidebar />
 
-		<main class="flex-1 px-4 py-8">
+		<main class="flex flex-1 flex-col gap-y-5 px-4 py-8">
 			{@render children()}
 		</main>
 

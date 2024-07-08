@@ -1,0 +1,29 @@
+{
+	"name": "sveltesociety.dev-service",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"lint": "run-p -l -c --aggregate-output lint:**",
+		"lint:biome": "biome check --colors=force .",
+		"lint:package.json": "pjv --warnings --recommendations --spec=npm",
+		"lint:jscpd": "jscpd --mode strict --exitCode 1 --reporters consoleFull lib/*.ts",
+		"lint:typescript": "tsc --noEmit",
+		"fix": "biome check --write ."
+	},
+	"keywords": [],
+	"author": "",
+	"license": "MIT",
+	"type": "module",
+	"devDependencies": {
+		"@biomejs/biome": "^1.8.2",
+		"jscpd": "^4.0.4",
+		"npm-run-all": "^4.1.5",
+		"package-json-validator": "^0.6.4",
+		"tslib": "^2.6.3",
+		"typescript": "^5.5.2"
+	},
+	"dependencies": {
+		"lru-cache": "^10.3.0"
+	}
+}
