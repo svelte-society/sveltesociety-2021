@@ -1,29 +1,33 @@
 import Database from 'better-sqlite3';
 
 export function seedContent(db: Database.Database) {
-  const getAllTagsStmt = db.prepare(`
+	const getAllTagsStmt = db.prepare(`
     SELECT id, slug FROM tags
   `);
 
-  const insertContentStmt = db.prepare(`
+	const insertContentStmt = db.prepare(`
     INSERT INTO content (title, type, body, rendered_body, slug, description, children, status, created_at, updated_at)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     RETURNING id
   `);
 
-  const insertContentTagStmt = db.prepare(`
+	const insertContentTagStmt = db.prepare(`
     INSERT INTO content_to_tags (content_id, tag_id)
     VALUES (?, ?)
   `);
-  const tagIds = getAllTagsStmt.all() as Array<{ slug: string; id: string }>;
+	const insetContentUserStmt = db.prepare(`
+	INSERT INTO content_to_users (content_id, user_id)
+	SELECT content.id as content_id, 1 as user_id FROM content
+	`);
+	const tagIds = getAllTagsStmt.all() as Array<{ slug: string; id: string }>;
 
-  const tagMap = new Map(tagIds.map((tag) => [tag.slug, tag.id]));
+	const tagMap = new Map(tagIds.map((tag) => [tag.slug, tag.id]));
 
-  const contentItems = [
-    {
-      title: 'Introduction to Svelte 5',
-      type: 'recipe',
-      body: `# Introduction to Svelte 5
+	const contentItems = [
+		{
+			title: 'Introduction to Svelte 5',
+			type: 'recipe',
+			body: `# Introduction to Svelte 5
       
       Svelte 5 introduces a revolutionary concept called runes, which fundamentally changes how we handle reactivity in Svelte applications. This major update brings significant improvements in performance and developer experience.
       
@@ -44,7 +48,7 @@ export function seedContent(db: Database.Database) {
       3. Better tooling support for static analysis
       
       In the following sections, we'll dive deeper into these concepts and explore how to leverage them in your Svelte applications.`,
-      rendered_body: `<h1>Introduction to Svelte 5</h1>
+			rendered_body: `<h1>Introduction to Svelte 5</h1>
 
 <p>Svelte 5 introduces a revolutionary concept called runes, which fundamentally changes how we handle reactivity in Svelte applications. This major update brings significant improvements in performance and developer experience.</p>
 
@@ -69,14 +73,14 @@ export function seedContent(db: Database.Database) {
 </ol>
 
 <p>In the following sections, we'll dive deeper into these concepts and explore how to leverage them in your Svelte applications.</p>`,
-      slug: 'introduction-to-svelte-5',
-      description: 'Learn about the new features in Svelte 5',
-      tags: [tagMap.get('svelte-5'), tagMap.get('runes')]
-    },
-    {
-      title: 'Understanding Runes in Svelte 5',
-      type: 'recipe',
-      body: `# Understanding Runes in Svelte 5
+			slug: 'introduction-to-svelte-5',
+			description: 'Learn about the new features in Svelte 5',
+			tags: [tagMap.get('svelte-5'), tagMap.get('runes')]
+		},
+		{
+			title: 'Understanding Runes in Svelte 5',
+			type: 'recipe',
+			body: `# Understanding Runes in Svelte 5
           
           Runes are a new way to handle reactivity in Svelte 5, offering developers more control and flexibility in managing state and side effects. This article will provide a comprehensive overview of runes and how to use them effectively in your Svelte applications.
           
@@ -121,7 +125,7 @@ export function seedContent(db: Database.Database) {
           - Optimizing performance with fine-grained reactivity
           
           Stay tuned for deep dives into each of these topics!`,
-      rendered_body: `<h1>Understanding Runes in Svelte 5</h1>
+			rendered_body: `<h1>Understanding Runes in Svelte 5</h1>
   
   <p>Runes are a new way to handle reactivity in Svelte 5, offering developers more control and flexibility in managing state and side effects. This article will provide a comprehensive overview of runes and how to use them effectively in your Svelte applications.</p>
   
@@ -165,14 +169,14 @@ export function seedContent(db: Database.Database) {
   </ul>
   
   <p>Stay tuned for deep dives into each of these topics!</p>`,
-      slug: 'understanding-runes-svelte-5',
-      description: "Deep dive into Svelte 5's runes",
-      tags: [tagMap.get('svelte-5'), tagMap.get('runes')]
-    },
-    {
-      title: '5 Useful Svelte Snippets',
-      type: 'recipe',
-      body: `# 5 Useful Svelte Snippets
+			slug: 'understanding-runes-svelte-5',
+			description: "Deep dive into Svelte 5's runes",
+			tags: [tagMap.get('svelte-5'), tagMap.get('runes')]
+		},
+		{
+			title: '5 Useful Svelte Snippets',
+			type: 'recipe',
+			body: `# 5 Useful Svelte Snippets
           
           Here are 5 Svelte snippets that will boost your productivity and help you write cleaner, more efficient code. These snippets are compatible with Svelte 5 and take advantage of the new runes system where applicable.
           
@@ -318,7 +322,7 @@ export function seedContent(db: Database.Database) {
           \`\`\`
           
           These snippets showcase some of the powerful features of Svelte 5 and how runes can be used to create efficient, reactive code. Experiment with them in your projects to see how they can enhance your development workflow!`,
-      rendered_body: `<h1>5 Useful Svelte Snippets</h1>
+			rendered_body: `<h1>5 Useful Svelte Snippets</h1>
   
   <p>Here are 5 Svelte snippets that will boost your productivity and help you write cleaner, more efficient code. These snippets are compatible with Svelte 5 and take advantage of the new runes system where applicable.</p>
   
@@ -459,14 +463,14 @@ export function seedContent(db: Database.Database) {
   </code></pre>
   
   <p>These snippets showcase some of the powerful features of Svelte 5 and how runes can be used to create efficient, reactive code. Experiment with them in your projects to see how they can enhance your development workflow!</p>`,
-      slug: '5-useful-svelte-snippets',
-      description: 'Boost your Svelte development with these snippets',
-      tags: [tagMap.get('svelte-5'), tagMap.get('snippet'), tagMap.get('utility')]
-    },
-    {
-      title: 'Building a Todo App with Svelte 5',
-      type: 'recipe',
-      body: `# Building a Todo App with Svelte 5
+			slug: '5-useful-svelte-snippets',
+			description: 'Boost your Svelte development with these snippets',
+			tags: [tagMap.get('svelte-5'), tagMap.get('snippet'), tagMap.get('utility')]
+		},
+		{
+			title: 'Building a Todo App with Svelte 5',
+			type: 'recipe',
+			body: `# Building a Todo App with Svelte 5
           
           In this tutorial, we'll build a todo app using Svelte 5 and runes. This project will demonstrate how to use the new reactivity system to create a dynamic and efficient user interface.
           
@@ -592,7 +596,7 @@ export function seedContent(db: Database.Database) {
           5. Bind events and handle user interactions
           
           Experiment with this app and try adding more features, such as filtering todos or saving them to localStorage. Happy coding!`,
-      rendered_body: `<h1>Building a Todo App with Svelte 5</h1>
+			rendered_body: `<h1>Building a Todo App with Svelte 5</h1>
   
   <p>In this tutorial, we'll build a todo app using Svelte 5 and runes. This project will demonstrate how to use the new reactivity system to create a dynamic and efficient user interface.</p>
   
@@ -715,55 +719,56 @@ export function seedContent(db: Database.Database) {
   </ol>
   
   <p>Experiment with this app and try adding more features, such as filtering todos or saving them to localStorage. Happy coding!</p>`,
-      slug: 'todo-app-svelte-5',
-      description: 'Step-by-step guide to building a todo app with Svelte 5',
-      tags: [tagMap.get('svelte-5'), tagMap.get('runes'), tagMap.get('utility')]
-    },
-    {
-      title: 'Svelte 5 Tutorial Series',
-      type: 'collection',
-      body: 'A comprehensive series of tutorials covering Svelte 5 features and best practices.',
-      rendered_body:
-        '<p>A comprehensive series of tutorials covering Svelte 5 features and best practices.</p>',
-      slug: 'svelte-5-tutorial-series',
-      description: 'Learn Svelte 5 from the ground up',
-      tags: [tagMap.get('svelte-5'), tagMap.get('tutorial')],
-      children: []
-    }
-  ];
+			slug: 'todo-app-svelte-5',
+			description: 'Step-by-step guide to building a todo app with Svelte 5',
+			tags: [tagMap.get('svelte-5'), tagMap.get('runes'), tagMap.get('utility')]
+		},
+		{
+			title: 'Svelte 5 Tutorial Series',
+			type: 'collection',
+			body: 'A comprehensive series of tutorials covering Svelte 5 features and best practices.',
+			rendered_body:
+				'<p>A comprehensive series of tutorials covering Svelte 5 features and best practices.</p>',
+			slug: 'svelte-5-tutorial-series',
+			description: 'Learn Svelte 5 from the ground up',
+			tags: [tagMap.get('svelte-5'), tagMap.get('tutorial')],
+			children: []
+		}
+	];
 
-  const insertContentAndTags = db.transaction((item) => {
-    const children = JSON.stringify(item.children || []);
-    const now = new Date().toISOString();
+	const insertContentAndTags = db.transaction((item) => {
+		const children = JSON.stringify(item.children || []);
+		const now = new Date().toISOString();
 
-    const info = insertContentStmt.get(
-      item.title,
-      item.type,
-      item.body,
-      item.rendered_body,
-      item.slug,
-      item.description,
-      children,
-      'published',
-      now,
-      now
-    ) as { id: string };
+		const info = insertContentStmt.get(
+			item.title,
+			item.type,
+			item.body,
+			item.rendered_body,
+			item.slug,
+			item.description,
+			children,
+			'published',
+			now,
+			now
+		) as { id: string };
 
-    const contentId = info.id;
+		const contentId = info.id;
 
-    for (const tagId of item.tags) {
-      insertContentTagStmt.run(contentId, tagId);
-    }
+		for (const tagId of item.tags) {
+			insertContentTagStmt.run(contentId, tagId);
+		}
 
-    return contentId;
-  });
+		return contentId;
+	});
 
-  try {
-    for (const item of contentItems) {
-      insertContentAndTags(item);
-    }
-    console.log('Content seeded successfully');
-  } catch (error) {
-    console.error('Error seeding content:', error);
-  }
+	try {
+		for (const item of contentItems) {
+			insertContentAndTags(item);
+		}
+		insetContentUserStmt.run();
+		console.log('Content seeded successfully');
+	} catch (error) {
+		console.error('Error seeding content:', error);
+	}
 }

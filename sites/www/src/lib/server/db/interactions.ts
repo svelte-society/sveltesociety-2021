@@ -2,14 +2,14 @@ import { db } from './index';
 
 export function get_user_likes_and_saves(
 	user_id: number | undefined,
-	content_ids: number[]
-): { user_likes: Set<number>; user_saves: Set<number> } {
+	content_ids: string[]
+): { user_likes: Set<string>; user_saves: Set<string> } {
 	if (!user_id || content_ids.length === 0) {
-		return { user_likes: new Set<number>(), user_saves: new Set<number>() };
+		return { user_likes: new Set<string>(), user_saves: new Set<string>() };
 	}
 
-	const user_likes = new Set<number>();
-	const user_saves = new Set<number>();
+	const user_likes = new Set<string>();
+	const user_saves = new Set<string>();
 
 	const likeStmt = db.prepare('SELECT 1 FROM likes WHERE user_id = ? AND target_id = ?');
 	const saveStmt = db.prepare('SELECT 1 FROM saves WHERE user_id = ? AND target_id = ?');

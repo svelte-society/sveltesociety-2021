@@ -8,12 +8,15 @@
 	import Recipe from '$lib/ui/content/Recipe.svelte';
 	import Collection from '$lib/ui/content/Collection.svelte';
 	import Video from '$lib/ui/content/Video.svelte';
+	import Library from '$lib/ui/content/Library.svelte';
+	import SvelteMarkdown from 'svelte-markdown';
 
 	interface ContentCardProps {
 		id: string | number;
 		title: string;
 		description?: string;
 		rendered_body?: string;
+		body?: string;
 		type: string;
 		author: string;
 		published_at: string;
@@ -25,6 +28,7 @@
 		tags: string[];
 		slug: string;
 		child_content: any[];
+		extra: any;
 	}
 
 	let {
@@ -32,6 +36,7 @@
 		title,
 		description,
 		rendered_body,
+		body,
 		type,
 		author,
 		published_at,
@@ -42,7 +47,8 @@
 		saved,
 		tags,
 		slug,
-		child_content
+		child_content,
+		extra
 	}: ContentCardProps = $props();
 
 	let submitting_like_toggle = $state(false);
@@ -87,7 +93,7 @@
 		<div class="flex">
 			<span class="font-semibold capitalize">{type}&nbsp;</span>
 			<span class="flex text-gray-500"
-				><span>by {author} • {formatRelativeDate(published_at)} •&nbsp;</span>
+				><span>by {author ?? extra.author} • {formatRelativeDate(published_at)} •&nbsp;</span>
 				<span class="flex items-center gap-1">
 					{views}
 					<svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
@@ -187,9 +193,20 @@
 		{:else if type === 'collection'}
 			<Collection {type} {slug} {child_content} />
 		{:else if type === 'video'}
-			<Video />
+			<Video {...extra} />
+		{:else if type === 'library'}
+			<Library {...extra} />
 		{/if}
 	</div>
+	{#if $page.route.id === '/(app)/(public)/[type]/[slug]' && (rendered_body || body)}
+		<section class="prose">
+			{#if rendered_body}
+				{@html rendered_body}
+			{:else if body}
+				<SvelteMarkdown source={body} />
+			{/if}
+		</section>
+	{/if}
 
 	<div class="mt-4 grid grid-cols-[1fr_auto] items-start justify-between">
 		<div class="flex space-x-2">

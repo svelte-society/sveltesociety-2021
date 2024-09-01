@@ -130,3 +130,10 @@ CREATE TABLE IF NOT EXISTS moderation_queue (
     FOREIGN KEY (submitted_by) REFERENCES users(id),
     FOREIGN KEY (moderated_by) REFERENCES users(id)
 );
+
+-- metadata table
+CREATE TABLE IF NOT EXISTS content_cache (
+    content_id TEXT PRIMARY KEY ,
+    content TEXT,
+    FOREIGN KEY (content_id) REFERENCES content(id)
+);

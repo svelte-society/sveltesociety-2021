@@ -1,6 +1,7 @@
 import { db } from './index';
 import { type Tag } from './tags';
 import { Status } from '$lib/server/db/common';
+import { get_user_by_ids, type User } from '$lib/server/db/user';
 
 interface GetContentParams {
 	limit?: number;
@@ -22,7 +23,7 @@ type ContentInput = {
 };
 
 export type Content = {
-	id: number;
+	id: string;
 	title: string;
 	type: string;
 	status: Status;
@@ -134,7 +135,7 @@ export const get_content_count = () => {
 	return (stmt.get() as { count: number }).count;
 };
 
-export const get_tags_for_content = (content_ids: number[]): Tag[][] => {
+export const get_tags_for_content = (content_ids: string[]): Tag[][] => {
 	const stmt = db.prepare(`
         SELECT t.id, t.name, t.slug, t.color
         FROM content_to_tags ct
@@ -142,7 +143,7 @@ export const get_tags_for_content = (content_ids: number[]): Tag[][] => {
         WHERE ct.content_id = ?
       `);
 
-	const getManyTags = db.transaction((ids: number[]) => {
+	const getManyTags = db.transaction((ids: string[]) => {
 		const results: Tag[][] = [];
 		for (const id of ids) {
 			const tags = stmt.all(id) as Tag[];
@@ -154,7 +155,7 @@ export const get_tags_for_content = (content_ids: number[]): Tag[][] => {
 	return getManyTags(content_ids);
 };
 
-export const get_content_by_ids = (contentIds: number[]): PreviewContent[] => {
+export const get_content_by_ids = (contentIds: string[]): PreviewContent[] => {
 	if (contentIds.length === 0) {
 		return [];
 	}
@@ -349,7 +350,7 @@ export const create_content = (input: ContentInput): number | null => {
 	}
 };
 
-export const get_content_by_id = (id: number): Content | null => {
+export const get_content_by_id = (id: string): Content | null => {
 	const stmt = db.prepare(`
         SELECT *
         FROM content
@@ -450,3 +451,11 @@ const update_content_tags = (contentId: number, tags: number[]) => {
 		console.error('Error updating content tags:', error);
 	}
 };
+
+export function get_content_users(content_id: string): Array<User> {
+	const relationStmt = db.prepare(`
+	SELECT user_id from content_to_users WHERE content_id = @content_id
+	`);
+	const user_ids = relationStmt.all({ content_id }).map((item) => item.user_id) as Array<number>;
+	return get_user_by_ids(user_ids);
+}

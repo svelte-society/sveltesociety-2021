@@ -38,6 +38,20 @@ export const get_user = (id: number): User | undefined => {
 	}
 };
 
+export const get_user_by_ids = (ids: number[]): User[] => {
+	const stmt = db.prepare(`
+      SELECT * FROM users
+      WHERE id IN (${ids.map((_) => '?').join(',')})
+    `);
+
+	try {
+		return stmt.all(...ids) as User[];
+	} catch (error) {
+		console.error('Error getting user:', error);
+		return [];
+	}
+};
+
 export const get_users = (): User[] => {
 	console.warn('get_users: No limit provided, risk of memory exhaustion');
 	const stmt = db.prepare(`

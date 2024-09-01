@@ -11,6 +11,7 @@ import {
 	remove_interaction
 } from '$lib/server/db/interactions';
 import { fail } from '@sveltejs/kit';
+import { get_metadata } from '$lib/server/db/content_cache';
 
 export const load: PageServerLoad = async ({ url, fetch, locals }) => {
 	const searchQuery = url.searchParams.get('search');
@@ -32,7 +33,7 @@ export const load: PageServerLoad = async ({ url, fetch, locals }) => {
 		const content_with_tags = content.map((c, i) => ({ ...c, tags: tags[i] || [] }));
 		const all_children = [
 			...new Set(content.reduce((acc, c) => [...acc, ...JSON.parse(c.children ?? '[]')], []))
-		];
+		] as string[];
 		const children = get_content_by_ids(all_children);
 
 		let content_with_tags_and_children = content_with_tags.map((c, i) => ({
@@ -56,7 +57,12 @@ export const load: PageServerLoad = async ({ url, fetch, locals }) => {
 		}
 
 		return {
-			content: content_with_tags_and_children,
+			content: await Promise.all(
+				content_with_tags_and_children.map(async (item) => ({
+					...item,
+					extra: await get_metadata(item.id)
+				}))
+			),
 			count: 0
 		};
 	}
@@ -67,13 +73,10 @@ export const actions = {
 		if (!locals.user) return;
 		const data = await request.formData();
 		const type = data.get('type') as 'like' | 'save';
-		const contentId = data.get('id') as string || null;
+		const contentId = (data.get('id') as string) || null;
 		const action = data.get('action') as 'add' | 'remove';
 
-		if (
-			!['like', 'save'].includes(type) ||
-			!['add', 'remove'].includes(action) || !contentId
-		) {
+		if (!['like', 'save'].includes(type) || !['add', 'remove'].includes(action) || !contentId) {
 			return fail(400, { message: 'Invalid input' });
 		}
 
