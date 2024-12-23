@@ -3179,5 +3179,21 @@
 		"description": "Tipex stands as an advanced rich text editor tailored for Svelte",
 		"npm": "@friendofsvelte/tipex",
 		"categories": ["forms-and-input"]
+	},
+	{
+		"title": "SurrealDB adapter for Lucia Auth",
+		"url": "https://jsr.io/@oskargmerek/surreal-lucia",
+		"repository": "https://github.com/oskar-gmerek/surreal-lucia",
+		"description": "This adapter seamlessly integrates SurrealDB with Lucia, providing a robust and easy-to-use authentication solution for modern applications.",
+		"jsr": "@oskargmerek/surreal-lucia",
+		"categories": ["auth", "integrations"]
+	},
+	{
+		"title": "Surreal Better Auth",
+		"url": "https://github.com/oskar-gmerek/surreal-better-auth",
+		"repository": "https://github.com/oskar-gmerek/surreal-better-auth",
+		"description": "SurrealDB Adapter for Better Auth. Use your favorite database as a Better-Auth storage.",
+		"npm": "surreal-better-auth",
+		"categories": ["auth", "integrations"]
 	}
 ]

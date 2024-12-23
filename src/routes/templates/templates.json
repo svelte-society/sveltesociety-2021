@@ -678,5 +678,12 @@
 		"repository": "https://github.com/thomax/svelte-express-sanity-oauth-template",
 		"description": "Template repo for setting up a full-stack web application with little config and even less hassle.",
 		"categories": ["integrations", "svelte", "database"]
+	},
+	{
+		"title": "Surreal Sveltekit",
+		"url": "https://github.com/oskar-gmerek/surreal-sveltekit",
+		"repository": "https://github.com/oskar-gmerek/surreal-sveltekit",
+		"description": "A Starter Kit with SurrealDB and Svelte [ SvelteKit ], featuring Authentication and CRUD Operations + Realtime",
+		"categories": ["database", "sveltekit", "ssr", "integrations"]
 	}
 ]
