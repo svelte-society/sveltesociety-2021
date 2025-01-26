@@ -674,4 +674,11 @@
 		"description": "Kener is status page system built with Sveltekit and NodeJS. It tries to help some who wants to come up with a status page that looks nice and minimum overhead, in a modern way.",
 		"categories": ["sveltekit", "ssr", "svelte"]
 	}
+	{
+	        "title": "svelte-minimal-site",
+	        "url": "https://sahil.zerops.xyz",
+	        "repository": "https://github.com/nermalcat69/svelte-minimal-site",
+	        "description": "Minimal personal website template with tailwindcss",
+	        "categories": ["sveltekit"]
+	}
 ]
